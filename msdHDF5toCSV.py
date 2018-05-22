@@ -82,6 +82,7 @@ class Song:
 def main():
     outputFile1 = open('SongCSV.csv', 'w')
     csvRowString = ""
+    print("started converting")
 
     #################################################
     #if you want to prompt the user for the order of attributes in the csv,

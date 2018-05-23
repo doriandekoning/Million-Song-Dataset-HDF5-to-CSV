@@ -185,8 +185,12 @@ def main():
             try: song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
             except:
                 pass
-            song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))
-            song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))
+            try: song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))
+            except:
+                pass
+            try: song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))
+            except:
+                pass
             song.analysisSampleRate = str(hdf5_getters.get_analysis_sample_rate(songH5File))
             song.audioMD5 = str(hdf5_getters.get_audio_md5(songH5File))
             song.endOfFadeIn = str(hdf5_getters.get_end_of_fade_in(songH5File))
@@ -212,20 +216,46 @@ def main():
             song.year = str(hdf5_getters.get_year(songH5File))
             song.trackID = str(hdf5_getters.get_track_id(songH5File))
             song.segmentsStart = str(hdf5_getters.get_segments_start(songH5File))
-            song.segmentsConfidence = str(hdf5_getters.get_segments_confidence(songH5File))
-            song.segmentsPitches = str(hdf5_getters.get_segments_pitches(songH5File))
-            song.segmentsTimbre = str(hdf5_getters.get_segments_timbre(songH5File))
-            song.segmentsLoudnessMax = str(hdf5_getters.get_segments_loudness_max(songH5File))
-            song.segmentsLoudnessMaxTime = str(hdf5_getters.get_segments_loudness_max_time(songH5File))
+            try: song.segmentsConfidence = str(hdf5_getters.get_segments_confidence(songH5File))
+            except:
+                pass
+            try: song.segmentsPitches = str(hdf5_getters.get_segments_pitches(songH5File))
+            except:
+                pass
+            try: song.segmentsTimbre = str(hdf5_getters.get_segments_timbre(songH5File))
+            except:
+                pass
+            try: song.segmentsLoudnessMax = str(hdf5_getters.get_segments_loudness_max(songH5File))
+            except:
+                pass
+            try: song.segmentsLoudnessMaxTime = str(hdf5_getters.get_segments_loudness_max_time(songH5File))
+            except:
+                pass
             song.segmentsLoudnessStart = str(hdf5_getters.get_segments_loudness_start(songH5File))
-            song.sectionStarts = str(hdf5_getters.get_sections_start(songH5File))
-            song.sectionsConfidence = str(hdf5_getters.get_sections_confidence(songH5File))
-            song.beatsStart = str(hdf5_getters.get_beats_start(songH5File))
-            song.beatsConfidence = str(hdf5_getters.get_beats_confidence(songH5File))
-            song.barsStart = str(hdf5_getters.get_bars_start(songH5File))
-            song.barsConfidence = str(hdf5_getters.get_bars_confidence(songH5File))
-            song.tatumsStart = str(hdf5_getters.get_tatums_start(songH5File))
-            song.tatumsConfidence = str(hdf5_getters.get_tatums_confidence(songH5File))
+            try: song.sectionStarts = str(hdf5_getters.get_sections_start(songH5File))
+            except:
+                pass
+            try: song.sectionsConfidence = str(hdf5_getters.get_sections_confidence(songH5File))
+            except:
+                pass
+            try: song.beatsStart = str(hdf5_getters.get_beats_start(songH5File))
+            except:
+                pass
+            try: song.beatsConfidence = str(hdf5_getters.get_beats_confidence(songH5File))
+            except:
+                pass
+            try: song.barsStart = str(hdf5_getters.get_bars_start(songH5File))
+            except:
+                pass
+            try: song.barsConfidence = str(hdf5_getters.get_bars_confidence(songH5File))
+            except:
+                pass
+            try: song.tatumsStart = str(hdf5_getters.get_tatums_start(songH5File))
+            except:
+                pass
+            try: song.tatumsConfidence = str(hdf5_getters.get_tatums_confidence(songH5File))
+            except:
+                pass
             
 
             #print song count

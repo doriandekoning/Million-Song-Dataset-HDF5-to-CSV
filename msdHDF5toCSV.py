@@ -229,7 +229,7 @@ def main():
                 # print "Here is the attribute: " + attribute + " \n"
                 if attribute != "SongID" and  hasattr(song, attribute) :
                     csvRowString += str(getattr(song, attribute))
-                else :
+                elif attribute != "SongID" :
                     print "Attibute {0} not found".format(attribute)
 
                 csvRowString += ","

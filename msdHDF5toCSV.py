@@ -76,18 +76,19 @@ class Song:
         print "Total Song Count %i" % Song.songCount
 
     def displaySong(self):
-        print "ID: %s" % self.id   
-	def writeheader(file):
-		csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
-			"ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
-			"KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
-			"Title,Year")
-		csvAttributeList = re.split('\W+', csvRowString)
-		for i, v in enumerate(csvAttributeList):
-			csvAttributeList[i] = csvAttributeList[i].lower()
-		file.write("SongNumber,");
-		file.write(csvRowString + "\n");
-		csvRowString = ""  
+        print "ID: %s" % self.id  
+	
+def writeheader(file):
+	csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
+		"ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
+		"KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
+		"Title,Year")
+	csvAttributeList = re.split('\W+', csvRowString)
+	for i, v in enumerate(csvAttributeList):
+		csvAttributeList[i] = csvAttributeList[i].lower()
+	file.write("SongNumber,");
+	file.write(csvRowString + "\n");
+	csvRowString = ""  
 
 def main():
     if not os.path.exists("out"):

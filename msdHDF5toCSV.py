@@ -147,99 +147,99 @@ def main():
     for root, dirs, files in os.walk(basedir):        
         files = glob.glob(os.path.join(root,'*'+ext))
         for f in files:
-	    counter+=1
-        if (counter % 1000) == 0 :
-	    	print "Progress: {0}".format(counter)
-        if (counter % 10000) == 0 :
-            outputFile1.close()
-            filecounter+=1
-    	    outputFile1 = open('out/SongCSV{0}.csv'.format(filecounter), 'w')
-    	    writeheader(outputFile1, csvRowString)
-		
-        songH5File = hdf5_getters.open_h5_file_read(f)
-        song = Song(str(hdf5_getters.get_song_id(songH5File)))
+            counter+=1
+            if (counter % 1000) == 0 :
+                print "Progress: {0}".format(counter)
+            if (counter % 10000) == 0 :
+                outputFile1.close()
+                filecounter+=1
+                outputFile1 = open('out/SongCSV{0}.csv'.format(filecounter), 'w')
+                writeheader(outputFile1, csvRowString)
+            
+            songH5File = hdf5_getters.open_h5_file_read(f)
+            song = Song(str(hdf5_getters.get_song_id(songH5File)))
 
-        testDanceability = hdf5_getters.get_danceability(songH5File)
-        # print type(testDanceability)
-        # print ("Here is the danceability: ") + str(testDanceability)
+            testDanceability = hdf5_getters.get_danceability(songH5File)
+            # print type(testDanceability)
+            # print ("Here is the danceability: ") + str(testDanceability)
 
-        song.artistName = str(hdf5_getters.get_artist_name(songH5File))
-        song.artistID = str(hdf5_getters.get_artist_id(songH5File))
-        song.albumID = str(hdf5_getters.get_release_7digitalid(songH5File))
-        song.artistLatitude = str(hdf5_getters.get_artist_latitude(songH5File))
-        song.artistLocation = str(hdf5_getters.get_artist_location(songH5File))
-        song.artistLongitude = str(hdf5_getters.get_artist_longitude(songH5File))
-        song.artistFamiliarity = str(hdf5_getters.get_artist_familiarity(songH5File))
-        song.artistHotttnesss = str(hdf5_getters.get_artist_hotttnesss(songH5File))
-        song.artistmbid = str(hdf5_getters.get_artist_mbid(songH5File))
-        song.artistPlaymeid = str(hdf5_getters.get_artist_playmeid(songH5File))
-        song.artist7digitalid = str(hdf5_getters.get_artist_7digitalid(songH5File))
-        song.artistTerms = str(hdf5_getters.get_artist_terms(songH5File))
-        song.artistTermsFreq = str(hdf5_getters.get_artist_terms_freq(songH5File))
-        song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
-        song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))
-        song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))
-        song.analysisSampleRate = str(hdf5_getters.get_analysis_sample_rate(songH5File))
-        song.audioMD5 = str(hdf5_getters.get_audio_md5(songH5File))
-        song.endOfFadeIn = str(hdf5_getters.get_end_of_fade_in(songH5File))
-        song.startOfFadeOut = str(hdf5_getters.get_start_of_fade_out(songH5File))
-        song.energy = str(hdf5_getters.get_energy(songH5File))
-        song.release = str(hdf5_getters.get_release(songH5File))
-        song.release7digitalid = str(hdf5_getters.get_release_7digitalid(songH5File))
-        song.songHotness = str(hdf5_getters.get_song_hotttnesss(songH5File))
-        song.track7digitalid = str(hdf5_getters.get_track_7digitalid(songH5File))
-        song.similarartists = str(hdf5_getters.get_similar_artists(songH5File))
-        song.loudness = str(hdf5_getters.get_loudness(songH5File))
-        song.mode = str(hdf5_getters.get_mode(songH5File))
-        song.modeConfidence = str(hdf5_getters.get_mode_confidence(songH5File))
-        song.artistName = str(hdf5_getters.get_artist_name(songH5File))
-        song.danceability = str(hdf5_getters.get_danceability(songH5File))
-        song.duration = str(hdf5_getters.get_duration(songH5File))
-        song.keySignature = str(hdf5_getters.get_key(songH5File))
-        song.keySignatureConfidence = str(hdf5_getters.get_key_confidence(songH5File))
-        song.tempo = str(hdf5_getters.get_tempo(songH5File))
-        song.timeSignature = str(hdf5_getters.get_time_signature(songH5File))
-        song.timeSignatureConfidence = str(hdf5_getters.get_time_signature_confidence(songH5File))
-        song.title = str(hdf5_getters.get_title(songH5File))
-        song.year = str(hdf5_getters.get_year(songH5File))
-        song.trackID = str(hdf5_getters.get_track_id(songH5File))
-        song.segmentsStart = str(hdf5_getters.get_segments_start(songH5File))
-        song.segmentsConfidence = str(hdf5_getters.get_segments_confidence(songH5File))
-        song.segmentsPitches = str(hdf5_getters.get_segments_pitches(songH5File))
-        song.segmentsTimbre = str(hdf5_getters.get_segments_timbre(songH5File))
-        song.segmentsLoudnessMax = str(hdf5_getters.get_segments_loudness_max(songH5File))
-        song.segmentsLoudnessMaxTime = str(hdf5_getters.get_segments_loudness_max_time(songH5File))
-        song.segmentsLoudnessStart = str(hdf5_getters.get_segments_loudness_start(songH5File))
-        song.sectionStarts = str(hdf5_getters.get_sections_start(songH5File))
-        song.sectionsConfidence = str(hdf5_getters.get_sections_confidence(songH5File))
-        song.beatsStart = str(hdf5_getters.get_beats_start(songH5File))
-        song.beatsConfidence = str(hdf5_getters.get_beats_confidence(songH5File))
-        song.barsStart = str(hdf5_getters.get_bars_start(songH5File))
-        song.barsConfidence = str(hdf5_getters.get_bars_confidence(songH5File))
-        song.tatumsStart = str(hdf5_getters.get_tatums_start(songH5File))
-        song.tatumsConfidence = str(hdf5_getters.get_tatums_confidence(songH5File))
-        
+            song.artistName = str(hdf5_getters.get_artist_name(songH5File))
+            song.artistID = str(hdf5_getters.get_artist_id(songH5File))
+            song.albumID = str(hdf5_getters.get_release_7digitalid(songH5File))
+            song.artistLatitude = str(hdf5_getters.get_artist_latitude(songH5File))
+            song.artistLocation = str(hdf5_getters.get_artist_location(songH5File))
+            song.artistLongitude = str(hdf5_getters.get_artist_longitude(songH5File))
+            song.artistFamiliarity = str(hdf5_getters.get_artist_familiarity(songH5File))
+            song.artistHotttnesss = str(hdf5_getters.get_artist_hotttnesss(songH5File))
+            song.artistmbid = str(hdf5_getters.get_artist_mbid(songH5File))
+            song.artistPlaymeid = str(hdf5_getters.get_artist_playmeid(songH5File))
+            song.artist7digitalid = str(hdf5_getters.get_artist_7digitalid(songH5File))
+            song.artistTerms = str(hdf5_getters.get_artist_terms(songH5File))
+            song.artistTermsFreq = str(hdf5_getters.get_artist_terms_freq(songH5File))
+            song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
+            song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))
+            song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))
+            song.analysisSampleRate = str(hdf5_getters.get_analysis_sample_rate(songH5File))
+            song.audioMD5 = str(hdf5_getters.get_audio_md5(songH5File))
+            song.endOfFadeIn = str(hdf5_getters.get_end_of_fade_in(songH5File))
+            song.startOfFadeOut = str(hdf5_getters.get_start_of_fade_out(songH5File))
+            song.energy = str(hdf5_getters.get_energy(songH5File))
+            song.release = str(hdf5_getters.get_release(songH5File))
+            song.release7digitalid = str(hdf5_getters.get_release_7digitalid(songH5File))
+            song.songHotness = str(hdf5_getters.get_song_hotttnesss(songH5File))
+            song.track7digitalid = str(hdf5_getters.get_track_7digitalid(songH5File))
+            song.similarartists = str(hdf5_getters.get_similar_artists(songH5File))
+            song.loudness = str(hdf5_getters.get_loudness(songH5File))
+            song.mode = str(hdf5_getters.get_mode(songH5File))
+            song.modeConfidence = str(hdf5_getters.get_mode_confidence(songH5File))
+            song.artistName = str(hdf5_getters.get_artist_name(songH5File))
+            song.danceability = str(hdf5_getters.get_danceability(songH5File))
+            song.duration = str(hdf5_getters.get_duration(songH5File))
+            song.keySignature = str(hdf5_getters.get_key(songH5File))
+            song.keySignatureConfidence = str(hdf5_getters.get_key_confidence(songH5File))
+            song.tempo = str(hdf5_getters.get_tempo(songH5File))
+            song.timeSignature = str(hdf5_getters.get_time_signature(songH5File))
+            song.timeSignatureConfidence = str(hdf5_getters.get_time_signature_confidence(songH5File))
+            song.title = str(hdf5_getters.get_title(songH5File))
+            song.year = str(hdf5_getters.get_year(songH5File))
+            song.trackID = str(hdf5_getters.get_track_id(songH5File))
+            song.segmentsStart = str(hdf5_getters.get_segments_start(songH5File))
+            song.segmentsConfidence = str(hdf5_getters.get_segments_confidence(songH5File))
+            song.segmentsPitches = str(hdf5_getters.get_segments_pitches(songH5File))
+            song.segmentsTimbre = str(hdf5_getters.get_segments_timbre(songH5File))
+            song.segmentsLoudnessMax = str(hdf5_getters.get_segments_loudness_max(songH5File))
+            song.segmentsLoudnessMaxTime = str(hdf5_getters.get_segments_loudness_max_time(songH5File))
+            song.segmentsLoudnessStart = str(hdf5_getters.get_segments_loudness_start(songH5File))
+            song.sectionStarts = str(hdf5_getters.get_sections_start(songH5File))
+            song.sectionsConfidence = str(hdf5_getters.get_sections_confidence(songH5File))
+            song.beatsStart = str(hdf5_getters.get_beats_start(songH5File))
+            song.beatsConfidence = str(hdf5_getters.get_beats_confidence(songH5File))
+            song.barsStart = str(hdf5_getters.get_bars_start(songH5File))
+            song.barsConfidence = str(hdf5_getters.get_bars_confidence(songH5File))
+            song.tatumsStart = str(hdf5_getters.get_tatums_start(songH5File))
+            song.tatumsConfidence = str(hdf5_getters.get_tatums_confidence(songH5File))
+            
 
-        #print song count
-        csvRowString += str(song.songCount) + ","
+            #print song count
+            csvRowString += str(song.songCount) + ","
 
-        for attribute in csvAttributeList:
-            # print "Here is the attribute: " + attribute + " \n"
-            if hasattr(song, attribute) :
-                csvRowString += getattr(song, attribute)
-            else :
-                print "Attibute {0} not found".format(attribute)
+            for attribute in csvAttributeList:
+                # print "Here is the attribute: " + attribute + " \n"
+                if hasattr(song, attribute) :
+                    csvRowString += getattr(song, attribute)
+                else :
+                    print "Attibute {0} not found".format(attribute)
 
-            csvRowString += ","
+                csvRowString += ","
 
-        #Remove the final comma from each row in the csv
-        lastIndex = len(csvRowString)
-        csvRowString = csvRowString[0:lastIndex-1]
-        csvRowString += "\n"
-        outputFile1.write(csvRowString)
-        csvRowString = ""
+            #Remove the final comma from each row in the csv
+            lastIndex = len(csvRowString)
+            csvRowString = csvRowString[0:lastIndex-1]
+            csvRowString += "\n"
+            outputFile1.write(csvRowString)
+            csvRowString = ""
 
-        songH5File.close()
+            songH5File.close()
 
     outputFile1.close()
 	

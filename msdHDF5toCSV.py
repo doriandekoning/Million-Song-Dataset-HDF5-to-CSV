@@ -126,10 +126,10 @@ def main():
     outputFile1 = open('out/SongCSV0.csv', 'w')
     csvRowString = ""
     csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
-        "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
-        "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
-        "Title,Year")
-	csvAttributeList = re.split('\W+', csvRowString)
+            "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
+            "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
+            "Title,Year")
+    csvAttributeList = re.split('\W+', csvRowString)
 	for i, v in enumerate(csvAttributeList):
 		csvAttributeList[i] = csvAttributeList[i].lower()
     writeheader(outputFile1, csvRowString)

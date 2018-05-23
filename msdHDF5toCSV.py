@@ -158,7 +158,7 @@ def main():
                 outputFile1.close()
                 filecounter+=1
                 outputFile1 = open('out/SongCSV{0}.csv'.format(filecounter), 'w')
-                writeheader(outputFile1, csvRowString)
+                writeheader(outputFile1, csvHeaderString)
             
             songH5File = hdf5_getters.open_h5_file_read(f)
             song = Song(str(hdf5_getters.get_song_id(songH5File)))

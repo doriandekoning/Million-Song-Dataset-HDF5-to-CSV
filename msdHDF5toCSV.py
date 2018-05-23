@@ -229,55 +229,8 @@ def main():
                 # print "Here is the attribute: " + attribute + " \n"
                 if hasattr(song, attribute) :
                     csvRowString += getattr(song, attribute)
-                # if attribute == 'AlbumID'.lower():
-                #     csvRowString += song.albumID
-                # elif attribute == 'AlbumName'.lower():
-                #     albumName = song.albumName
-                #     albumName = albumName.replace(',',"")
-                #     csvRowString += "\"" + albumName + "\""
-                # elif attribute == 'ArtistID'.lower():
-                #     csvRowString += "\"" + song.artistID + "\""
-                # elif attribute == 'ArtistLatitude'.lower():
-                #     latitude = song.artistLatitude
-                #     if latitude == 'nan':
-                #         latitude = ''
-                #     csvRowString += latitude
-                # elif attribute == 'ArtistLocation'.lower():
-                #     location = song.artistLocation
-                #     location = location.replace(',','')
-                #     csvRowString += "\"" + location + "\""
-                # elif attribute == 'ArtistLongitude'.lower():
-                #     longitude = song.artistLongitude
-                #     if longitude == 'nan':
-                #         longitude = ''
-                #     csvRowString += longitude                
-                # elif attribute == 'ArtistName'.lower():
-                #     csvRowString += "\"" + song.artistName + "\""                
-                # elif attribute == 'Danceability'.lower():
-                #     csvRowString += song.danceability
-                # elif attribute == 'Duration'.lower():
-                #     csvRowString += song.duration
-                # elif attribute == 'KeySignature'.lower():
-                #     csvRowString += song.keySignature
-                # elif attribute == 'KeySignatureConfidence'.lower():
-                #     # print "key sig conf: " + song.timeSignatureConfidence                                 
-                #     csvRowString += song.keySignatureConfidence
-                # elif attribute == 'SongID'.lower():
-                #     csvRowString += "\"" + song.id + "\""
-                # elif attribute == 'Tempo'.lower():
-                #     # print "Tempo: " + song.tempo
-                #     csvRowString += song.tempo
-                # elif attribute == 'TimeSignature'.lower():
-                #     csvRowString += song.timeSignature
-                # elif attribute == 'TimeSignatureConfidence'.lower():
-                #     # print "time sig conf: " + song.timeSignatureConfidence                                   
-                #     csvRowString += song.timeSignatureConfidence
-                # elif attribute == 'Title'.lower():
-                #     csvRowString += "\"" + song.title + "\""
-                # elif attribute == 'Year'.lower():
-                #     csvRowString += song.year
-                # else:
-                #     csvRowString += "Erm. This didn't work. Error. :( :(\n"
+                else :
+                    print "Attibute {0} not found".format(attribute)
 
                 csvRowString += ","
 

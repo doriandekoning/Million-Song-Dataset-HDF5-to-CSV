@@ -149,6 +149,7 @@ def main():
     for root, dirs, files in os.walk(basedir):        
         files = glob.glob(os.path.join(root,'*'+ext))
         for f in files:
+            f.
             counter+=1
             if (counter % 1000) == 0 :
                 print "Progress: {0}".format(counter)
@@ -176,21 +177,11 @@ def main():
             song.artistmbid = str(hdf5_getters.get_artist_mbid(songH5File))
             song.artistPlaymeid = str(hdf5_getters.get_artist_playmeid(songH5File))
             song.artist7digitalid = str(hdf5_getters.get_artist_7digitalid(songH5File))
-            try: song.artistTerms = str(hdf5_getters.get_artist_terms(songH5File)) 
-            except: 
-                pass
-            try:  song.artistTermsFreq = str(hdf5_getters.get_artist_terms_freq(songH5File))
-            except: 
-                pass
-            try: song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
-            except:
-                pass
-            try: song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))
-            except:
-                pass
-            try: song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))
-            except:
-                pass
+            song.artistTerms = str(hdf5_getters.get_artist_terms(songH5File)) 
+            song.artistTermsFreq = str(hdf5_getters.get_artist_terms_freq(songH5File))
+            song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
+            song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))      
+            song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))
             song.analysisSampleRate = str(hdf5_getters.get_analysis_sample_rate(songH5File))
             song.audioMD5 = str(hdf5_getters.get_audio_md5(songH5File))
             song.endOfFadeIn = str(hdf5_getters.get_end_of_fade_in(songH5File))
@@ -200,9 +191,7 @@ def main():
             song.release7digitalid = str(hdf5_getters.get_release_7digitalid(songH5File))
             song.songHotness = str(hdf5_getters.get_song_hotttnesss(songH5File))
             song.track7digitalid = str(hdf5_getters.get_track_7digitalid(songH5File))
-            try: song.similarartists = str(hdf5_getters.get_similar_artists(songH5File))
-            except:
-                pass
+            song.similarartists = str(hdf5_getters.get_similar_artists(songH5File))
             song.loudness = str(hdf5_getters.get_loudness(songH5File))
             song.mode = str(hdf5_getters.get_mode(songH5File))
             song.modeConfidence = str(hdf5_getters.get_mode_confidence(songH5File))
@@ -218,46 +207,20 @@ def main():
             song.year = str(hdf5_getters.get_year(songH5File))
             song.trackID = str(hdf5_getters.get_track_id(songH5File))
             song.segmentsStart = str(hdf5_getters.get_segments_start(songH5File))
-            try: song.segmentsConfidence = str(hdf5_getters.get_segments_confidence(songH5File))
-            except:
-                pass
-            try: song.segmentsPitches = str(hdf5_getters.get_segments_pitches(songH5File))
-            except:
-                pass
-            try: song.segmentsTimbre = str(hdf5_getters.get_segments_timbre(songH5File))
-            except:
-                pass
-            try: song.segmentsLoudnessMax = str(hdf5_getters.get_segments_loudness_max(songH5File))
-            except:
-                pass
-            try: song.segmentsLoudnessMaxTime = str(hdf5_getters.get_segments_loudness_max_time(songH5File))
-            except:
-                pass
+            song.segmentsConfidence = str(hdf5_getters.get_segments_confidence(songH5File))
+            song.segmentsPitches = str(hdf5_getters.get_segments_pitches(songH5File))
+            song.segmentsTimbre = str(hdf5_getters.get_segments_timbre(songH5File))
+            song.segmentsLoudnessMax = str(hdf5_getters.get_segments_loudness_max(songH5File))
+            song.segmentsLoudnessMaxTime = str(hdf5_getters.get_segments_loudness_max_time(songH5File))
             song.segmentsLoudnessStart = str(hdf5_getters.get_segments_loudness_start(songH5File))
-            try: song.sectionStarts = str(hdf5_getters.get_sections_start(songH5File))
-            except:
-                pass
-            try: song.sectionsConfidence = str(hdf5_getters.get_sections_confidence(songH5File))
-            except:
-                pass
-            try: song.beatsStart = str(hdf5_getters.get_beats_start(songH5File))
-            except:
-                pass
-            try: song.beatsConfidence = str(hdf5_getters.get_beats_confidence(songH5File))
-            except:
-                pass
-            try: song.barsStart = str(hdf5_getters.get_bars_start(songH5File))
-            except:
-                pass
-            try: song.barsConfidence = str(hdf5_getters.get_bars_confidence(songH5File))
-            except:
-                pass
-            try: song.tatumsStart = str(hdf5_getters.get_tatums_start(songH5File))
-            except:
-                pass
-            try: song.tatumsConfidence = str(hdf5_getters.get_tatums_confidence(songH5File))
-            except:
-                pass
+            song.sectionStarts = str(hdf5_getters.get_sections_start(songH5File))
+            song.sectionsConfidence = str(hdf5_getters.get_sections_confidence(songH5File))
+            song.beatsStart = str(hdf5_getters.get_beats_start(songH5File))
+            song.beatsConfidence = str(hdf5_getters.get_beats_confidence(songH5File))
+            song.barsStart = str(hdf5_getters.get_bars_start(songH5File))
+            song.barsConfidence = str(hdf5_getters.get_bars_confidence(songH5File))
+            song.tatumsStart = str(hdf5_getters.get_tatums_start(songH5File))
+            song.tatumsConfidence = str(hdf5_getters.get_tatums_confidence(songH5File))
             
 
             #print song count

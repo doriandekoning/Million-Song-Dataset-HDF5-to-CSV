@@ -223,7 +223,7 @@ def main():
             #print song count
             csvRowString += str(song.songCount) + ","
 
-            for attribute in csvAttributeList:
+            for attribute in  re.split('\W+', csvRowString):
                 # print "Here is the attribute: " + attribute + " \n"
                 if hasattr(song, attribute) :
                     csvRowString += getattr(song, attribute)

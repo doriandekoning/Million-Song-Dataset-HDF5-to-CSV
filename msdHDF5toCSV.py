@@ -145,6 +145,7 @@ def main():
     #FOR LOOP
     counter = 0
     filecounter = 0
+    csvRowString = ""
     for root, dirs, files in os.walk(basedir):        
         files = glob.glob(os.path.join(root,'*'+ext))
         for f in files:
@@ -227,7 +228,7 @@ def main():
             for attribute in  re.split('\W+', csvHeaderString):
                 # print "Here is the attribute: " + attribute + " \n"
                 if hasattr(song, attribute) :
-                    csvRowString += getattr(song, attribute)
+                    csvRowString += str(getattr(song, attribute))
                 else :
                     print "Attibute {0} not found".format(attribute)
 

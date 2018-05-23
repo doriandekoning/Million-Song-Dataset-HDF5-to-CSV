@@ -182,7 +182,9 @@ def main():
             try:  song.artistTermsFreq = str(hdf5_getters.get_artist_terms_freq(songH5File))
             except: 
                 pass
-            song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
+            try: song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
+            except:
+                pass
             song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))
             song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))
             song.analysisSampleRate = str(hdf5_getters.get_analysis_sample_rate(songH5File))

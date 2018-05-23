@@ -114,14 +114,8 @@ class Song:
     def displaySong(self):
         print "ID: %s" % self.id  
 	
-def writeheader(file):
-	csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
-		"ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
-		"KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
-		"Title,Year")
-	csvAttributeList = re.split('\W+', csvRowString)
-	for i, v in enumerate(csvAttributeList):
-		csvAttributeList[i] = csvAttributeList[i].lower()
+def writeheader(file, csvRowString):
+	
 	file.write("SongNumber,");
 	file.write(csvRowString + "\n");
 	csvRowString = ""  
@@ -131,7 +125,14 @@ def main():
     	os.makedirs("out")
     outputFile1 = open('out/SongCSV0.csv', 'w')
     csvRowString = ""
-    writeheader(outputFile1)
+    csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
+        "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
+        "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
+        "Title,Year")
+	csvAttributeList = re.split('\W+', csvRowString)
+	for i, v in enumerate(csvAttributeList):
+		csvAttributeList[i] = csvAttributeList[i].lower()
+    writeheader(outputFile1, csvRowString)
     print("started converting")
 
 
@@ -141,7 +142,7 @@ def main():
     basedir = "." # "." As the default means the current directory
     ext = ".h5" #Set the extension here. H5 is the extension for HDF5 files.
     #################################################
-
+  
     #FOR LOOP
     counter = 0
     filecounter = 0
@@ -154,7 +155,7 @@ def main():
     		outputFile1.close()
 		filecounter+=1
 		outputFile1 = open('out/SongCSV{0}.csv'.format(filecounter), 'w')
-		writeheader(outputFile1)
+		writeheader(outputFile1, csvRowString)
 		
             songH5File = hdf5_getters.open_h5_file_read(f)
             song = Song(str(hdf5_getters.get_song_id(songH5File)))

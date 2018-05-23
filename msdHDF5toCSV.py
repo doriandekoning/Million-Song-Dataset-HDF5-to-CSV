@@ -231,7 +231,7 @@ def main():
 
             for attribute in  re.split('\W+', csvHeaderString):
                 # print "Here is the attribute: " + attribute + " \n"
-                if attribute != "SongID" and  hasattr(song, attribute) :
+                if attribute != "SongID" :
                     csvRowString += str(getattr(song, attribute))
                 elif attribute != "SongID" :
                     print "Attibute {0} not found".format(attribute)

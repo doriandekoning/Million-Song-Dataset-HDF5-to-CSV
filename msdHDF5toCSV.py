@@ -80,8 +80,8 @@ class Song:
 
 
 def main():
-    if not os.path.exists(directory):
-    	os.makedirs(directory)
+    if not os.path.exists("out"):
+    	os.makedirs("out")
     outputFile1 = open('out/SongCSV0.csv', 'w')
     csvRowString = ""
     print("started converting")

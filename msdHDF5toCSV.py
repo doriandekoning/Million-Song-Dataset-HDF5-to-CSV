@@ -94,7 +94,7 @@ def main():
     	os.makedirs("out")
     outputFile1 = open('out/SongCSV0.csv', 'w')
     csvRowString = ""
-	writeheader(outputFile1)
+    writeheader(outputFile1)
     print("started converting")
 
 

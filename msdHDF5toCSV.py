@@ -125,10 +125,7 @@ def main():
     	os.makedirs("out")
     outputFile1 = open('out/SongCSV0.csv', 'w')
 
-    csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
-        "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
-        "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
-        "Title,Year")
+    csvRowString = ("SongID,albumName,albumID,artistID,artistLatitude,artistLocation,artistLongitude,artistFamiliarity,artistHotttnesss,artistmbid,artistPlaymeid,artist7digitalid,artistTerms,artistTermsFreq,artistTermsWeight,artistMBTags,artistMBTagsCount,analysisSampleRate,audioMD5,endOfFadeIn,startOfFadeOut,energy,release,release7digitalid,songHotness,track7digitalid,similarartists,loudness,mode,modeConfidence,artistName,danceability,duration,keySignature,keySignatureConfidence,tempo,timeSignature,timeSignatureConfidence,title,year,trackID,segmentsStart,segmentsConfidence,segmentsPitches,segmentsTimbre,segmentsLoudnessMax,segmentsLoudnessMaxTime,segmentsLoudnessStart,sectionStarts,sectionsConfidence,beatsStart,beatsConfidence,barsStart,barsConfidence,tatumsStart,tatumsConfidence")
 
     csvAttributeList = re.split('\W+', csvRowString)
     for i, v in enumerate(csvAttributeList):

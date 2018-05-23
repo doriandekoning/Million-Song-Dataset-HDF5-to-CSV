@@ -150,7 +150,6 @@ def main():
     for root, dirs, files in os.walk(basedir):        
         files = glob.glob(os.path.join(root,'*'+ext))
         for f in files:
-            f.
             counter+=1
             if (counter % 1000) == 0 :
                 print "Progress: {0}".format(counter)

@@ -195,7 +195,7 @@ def main():
     for root, dirs, files in os.walk(basedir):        
         files = glob.glob(os.path.join(root,'*'+ext))
         for f in files:
-	    if counter % 1000 == 0
+	    if (counter % 1000) == 0 :
    	    	counter+=1
 	    print "Progress: {0}".format(counter)
             songH5File = hdf5_getters.open_h5_file_read(f)

@@ -176,8 +176,12 @@ def main():
             song.artistmbid = str(hdf5_getters.get_artist_mbid(songH5File))
             song.artistPlaymeid = str(hdf5_getters.get_artist_playmeid(songH5File))
             song.artist7digitalid = str(hdf5_getters.get_artist_7digitalid(songH5File))
-            #song.artistTerms = str(hdf5_getters.get_artist_terms(songH5File))
-            # song.artistTermsFreq = str(hdf5_getters.get_artist_terms_freq(songH5File))
+            try: song.artistTerms = str(hdf5_getters.get_artist_terms(songH5File)) 
+            except: 
+                pass
+            try:  song.artistTermsFreq = str(hdf5_getters.get_artist_terms_freq(songH5File))
+            except: 
+                pass
             song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
             song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))
             song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))

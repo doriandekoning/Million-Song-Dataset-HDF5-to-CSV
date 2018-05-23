@@ -42,6 +42,7 @@ import os
 import glob
 import hdf5_getters
 import re
+import numpy
 
 class Song:
     songCount = 0
@@ -121,7 +122,7 @@ def writeheader(file, csvRowString):
 	csvRowString = ""  
 
 def main():
-    np.set_printoptions(threshold=np.nan)
+    numpy.set_printoptions(threshold=sys.maxint)
     if not os.path.exists("out"):
     	os.makedirs("out")
     outputFile1 = open('out/SongCSV0.csv', 'w')

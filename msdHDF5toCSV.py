@@ -124,14 +124,15 @@ def main():
     if not os.path.exists("out"):
     	os.makedirs("out")
     outputFile1 = open('out/SongCSV0.csv', 'w')
-    csvRowString = ""
+
     csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
-            "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
-            "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
-            "Title,Year")
+        "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
+        "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
+        "Title,Year")
+
     csvAttributeList = re.split('\W+', csvRowString)
-	for i, v in enumerate(csvAttributeList):
-		csvAttributeList[i] = csvAttributeList[i].lower()
+    for i, v in enumerate(csvAttributeList):
+        csvAttributeList[i] = csvAttributeList[i].lower()
     writeheader(outputFile1, csvRowString)
     print("started converting")
 
@@ -226,7 +227,7 @@ def main():
 
             for attribute in csvAttributeList:
                 # print "Here is the attribute: " + attribute + " \n"
-                if hasattr(song, attribute) 
+                if hasattr(song, attribute) :
                     csvRowString += getattr(song, attribute)
                 # if attribute == 'AlbumID'.lower():
                 #     csvRowString += song.albumID

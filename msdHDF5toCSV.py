@@ -152,7 +152,7 @@ def main():
             counter+=1
             if (counter % 1000) == 0 :
                 print "Progress: {0}".format(counter)
-            if (counter % 10000) == 0 :
+            if (counter % 100) == 0 :
                 outputFile1.close()
                 filecounter+=1
                 outputFile1 = open('out/SongCSV{0}.csv'.format(filecounter), 'w')

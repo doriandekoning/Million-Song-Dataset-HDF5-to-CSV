@@ -200,7 +200,9 @@ def main():
             song.release7digitalid = str(hdf5_getters.get_release_7digitalid(songH5File))
             song.songHotness = str(hdf5_getters.get_song_hotttnesss(songH5File))
             song.track7digitalid = str(hdf5_getters.get_track_7digitalid(songH5File))
-            song.similarartists = str(hdf5_getters.get_similar_artists(songH5File))
+            try: song.similarartists = str(hdf5_getters.get_similar_artists(songH5File))
+            except:
+                pass
             song.loudness = str(hdf5_getters.get_loudness(songH5File))
             song.mode = str(hdf5_getters.get_mode(songH5File))
             song.modeConfidence = str(hdf5_getters.get_mode_confidence(songH5File))

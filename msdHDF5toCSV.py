@@ -199,7 +199,7 @@ def main():
         files = glob.glob(os.path.join(root,'*'+ext))
         for f in files:
 	    counter+=1
-	    if (counter % 50000) == 0 :
+	    if (counter % 10000) == 0 :
 	    	print "Progress: {0}".format(counter)
     		outputFile1.close()
 		filecounter+=1

@@ -121,6 +121,7 @@ def writeheader(file, csvRowString):
 	csvRowString = ""  
 
 def main():
+    np.set_printoptions(threshold=np.nan)
     if not os.path.exists("out"):
     	os.makedirs("out")
     outputFile1 = open('out/SongCSV0.csv', 'w')
@@ -153,7 +154,7 @@ def main():
             counter+=1
             if (counter % 1000) == 0 :
                 print "Progress: {0}".format(counter)
-            if (counter % 100) == 0 :
+            if (counter % 10000) == 0 :
                 outputFile1.close()
                 filecounter+=1
                 outputFile1 = open('out/SongCSV{0}.csv'.format(filecounter), 'w')

@@ -196,7 +196,7 @@ def main():
         files = glob.glob(os.path.join(root,'*'+ext))
         for f in files:
    	    counter+=1
-	    print ("Progress: {0}%", counter/len(files)*100)
+	    print ("Progress: {0}" %counter)
             songH5File = hdf5_getters.open_h5_file_read(f)
             song = Song(str(hdf5_getters.get_song_id(songH5File)))
 

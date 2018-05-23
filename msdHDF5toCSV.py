@@ -77,113 +77,26 @@ class Song:
 
     def displaySong(self):
         print "ID: %s" % self.id   
-
+	def writeheader(file):
+		csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
+			"ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
+			"KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
+			"Title,Year")
+		csvAttributeList = re.split('\W+', csvRowString)
+		for i, v in enumerate(csvAttributeList):
+			csvAttributeList[i] = csvAttributeList[i].lower()
+		file.write("SongNumber,");
+		file.write(csvRowString + "\n");
+		csvRowString = ""  
 
 def main():
     if not os.path.exists("out"):
     	os.makedirs("out")
     outputFile1 = open('out/SongCSV0.csv', 'w')
     csvRowString = ""
+	writeheader(outputFile1)
     print("started converting")
 
-    #################################################
-    #if you want to prompt the user for the order of attributes in the csv,
-    #leave the prompt boolean set to True
-    #else, set 'prompt' to False and set the order of attributes in the 'else'
-    #clause
-    prompt = False
-    #################################################
-    if prompt == True:
-        while prompt:
-
-            prompt = False
-
-            csvAttributeString = raw_input("\n\nIn what order would you like the colums of the CSV file?\n" +
-                "Please delineate with commas. The options are: " +
-                "AlbumName, AlbumID, ArtistID, ArtistLatitude, ArtistLocation, ArtistLongitude,"+
-                " ArtistName, Danceability, Duration, KeySignature, KeySignatureConfidence, Tempo," +
-                " SongID, TimeSignature, TimeSignatureConfidence, Title, and Year.\n\n" +
-                "For example, you may write \"Title, Tempo, Duration\"...\n\n" +
-                "...or exit by typing 'exit'.\n\n")
-
-            csvAttributeList = re.split('\W+', csvAttributeString)
-            for i, v in enumerate(csvAttributeList):
-                csvAttributeList[i] = csvAttributeList[i].lower()
-
-            for attribute in csvAttributeList:
-                # print "Here is the attribute: " + attribute + " \n"
-
-
-                if attribute == 'AlbumID'.lower():
-                    csvRowString += 'AlbumID'
-                elif attribute == 'AlbumName'.lower():
-                    csvRowString += 'AlbumName'
-                elif attribute == 'ArtistID'.lower():
-                    csvRowString += 'ArtistID'
-                elif attribute == 'ArtistLatitude'.lower():
-                    csvRowString += 'ArtistLatitude'
-                elif attribute == 'ArtistLocation'.lower():
-                    csvRowString += 'ArtistLocation'
-                elif attribute == 'ArtistLongitude'.lower():
-                    csvRowString += 'ArtistLongitude'
-                elif attribute == 'ArtistName'.lower():
-                    csvRowString += 'ArtistName'
-                elif attribute == 'Danceability'.lower():
-                    csvRowString += 'Danceability'
-                elif attribute == 'Duration'.lower():
-                    csvRowString += 'Duration'
-                elif attribute == 'KeySignature'.lower():
-                    csvRowString += 'KeySignature'
-                elif attribute == 'KeySignatureConfidence'.lower():
-                    csvRowString += 'KeySignatureConfidence'
-                elif attribute == 'SongID'.lower():
-                    csvRowString += "SongID"
-                elif attribute == 'Tempo'.lower():
-                    csvRowString += 'Tempo'
-                elif attribute == 'TimeSignature'.lower():
-                    csvRowString += 'TimeSignature'
-                elif attribute == 'TimeSignatureConfidence'.lower():
-                    csvRowString += 'TimeSignatureConfidence'
-                elif attribute == 'Title'.lower():
-                    csvRowString += 'Title'
-                elif attribute == 'Year'.lower():
-                    csvRowString += 'Year'
-                elif attribute == 'Exit'.lower():
-                    sys.exit()
-                else:
-                    prompt = True
-                    print "=============="
-                    print "I believe there has been an error with the input."
-                    print "=============="
-                    break
-
-                csvRowString += ","
-
-            lastIndex = len(csvRowString)
-            csvRowString = csvRowString[0:lastIndex-1]
-            csvRowString += "\n"
-            outputFile1.write(csvRowString);
-            csvRowString = ""
-    #else, if you want to hard code the order of the csv file and not prompt
-    #the user, 
-    else:
-        #################################################
-        #change the order of the csv file here
-        #Default is to list all available attributes (in alphabetical order)
-        csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
-            "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
-            "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
-            "Title,Year")
-        #################################################
-
-        csvAttributeList = re.split('\W+', csvRowString)
-        for i, v in enumerate(csvAttributeList):
-            csvAttributeList[i] = csvAttributeList[i].lower()
-        outputFile1.write("SongNumber,");
-        outputFile1.write(csvRowString + "\n");
-        csvRowString = ""  
-
-    #################################################
 
 
     #Set the basedir here, the root directory from which the search
@@ -204,6 +117,7 @@ def main():
     		outputFile1.close()
 		filecounter+=1
 		outputFile1 = open('out/SongCSV{0}.csv'.format(filecounter), 'w')
+		writeheader(outputFile1)
 		
             songH5File = hdf5_getters.open_h5_file_read(f)
             song = Song(str(hdf5_getters.get_song_id(songH5File)))

@@ -44,8 +44,10 @@ import hdf5_getters
 import re
 import numpy
 
+
 class Song:
     songCount = 0
+
     # songDictionary = {}
 
     def __init__(self, songID):
@@ -65,9 +67,13 @@ class Song:
         self.artistPlaymeid = None
         self.artist7digitalid = None
         self.artistTerms = None
+
+        self.artistTermsCount = None
         self.artistTermsFreq = None
         self.artistTermsWeight = None
         self.artistMBTags = None
+
+        self.artistMBTagsOuterCount = None
         self.artistMBTagsCount = None
         self.analysisSampleRate = None
         self.audioMD5 = None
@@ -79,6 +85,8 @@ class Song:
         self.songHotness = None
         self.track7digitalid = None
         self.similarartists = None
+
+        self.similarArtistsCount = None
         self.loudness = None
         self.mode = None
         self.modeConfidence = None
@@ -94,6 +102,8 @@ class Song:
         self.year = None
         self.trackID = None
         self.segmentsStart = None
+
+        self.segmentsCount = None
         self.segmentsConfidence = None
         self.segmentsPitches = None
         self.segmentsTimbre = None
@@ -101,65 +111,125 @@ class Song:
         self.segmentsLoudnessMaxTime = None
         self.segmentsLoudnessStart = None
         self.sectionStarts = None
+
+        self.sectionCount = None
         self.sectionsConfidence = None
         self.beatsStart = None
+
+        self.beatsCount = None
         self.beatsConfidence = None
         self.barsStart = None
+
+        self.barsCount = None
         self.barsConfidence = None
+
         self.tatumsStart = None
+        self.tatumsCount = None
         self.tatumsConfidence = None
 
     def displaySongCount(self):
         print "Total Song Count %i" % Song.songCount
 
     def displaySong(self):
-        print "ID: %s" % self.id  
-	
-def writeheader(file, csvRowString):
-	
-	file.write("SongNumber,");
-	file.write(csvRowString + "\n");
-	csvRowString = ""  
+        print "ID: %s" % self.id
 
-def main():
+
+def get_list_length(lst):
+    """
+    Gets the length of a list or returns 1 in case the lst object is not a list
+
+    :param lst: the list
+    :return: the list's length
+    """
+    x = 1
+
+    try:
+        x = len(lst)
+    except:
+        pass
+
+    return str(x)
+
+
+def remove_trap_characters(pre_text):
+    return pre_text.replace('\n', '')
+
+
+def writeheader(write_file, scv_row_string):
+    write_file.write("SongNumber,")
+    write_file.write(scv_row_string + "\n")
+
+
+if __name__ == '__main__':
+    # Default values for these
+    output_dir = './out'
+    base_dir = '.'
+    base_file_name = 'SongCSV{0}.csv'
+
+    ext = ".h5"  # Set the extension here. H5 is the extension for HDF5 files.
+
+    print(sys.argv)
+
+    # First check the arguments
+    if len(sys.argv) > 2:
+        base_dir = sys.argv[1]
+        output_dir = sys.argv[2]
+    elif len(sys.argv) > 1:
+        base_dir = sys.argv[1]
+
+        print "Did not receive a second input argument; defaulting output dir to './out/'"
+        print "Usage: python msdHDF5toCSV.py <h5_base_dir> <output_dir>"
+    else:
+        print "Did not receive any input arguments; defaulting base_dir to '.'and output_dir to './out/'"
+        print "Usage: python msdHDF5toCSV.py <h5_base_dir> <output_dir>"
+
     numpy.set_printoptions(threshold=sys.maxint)
-    if not os.path.exists("out"):
-    	os.makedirs("out")
-    outputFile1 = open('out/SongCSV0.csv', 'w')
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
-    csvHeaderString = ("SongID,albumName,albumID,artistID,artistLatitude,artistLocation,artistLongitude,artistFamiliarity,artistHotttnesss,artistmbid,artistPlaymeid,artist7digitalid,artistTerms,artistTermsFreq,artistTermsWeight,artistMBTags,artistMBTagsCount,analysisSampleRate,audioMD5,endOfFadeIn,startOfFadeOut,energy,release,release7digitalid,songHotness,track7digitalid,similarartists,loudness,mode,modeConfidence,artistName,danceability,duration,keySignature,keySignatureConfidence,tempo,timeSignature,timeSignatureConfidence,title,year,trackID,segmentsStart,segmentsConfidence,segmentsPitches,segmentsTimbre,segmentsLoudnessMax,segmentsLoudnessMaxTime,segmentsLoudnessStart,sectionStarts,sectionsConfidence,beatsStart,beatsConfidence,barsStart,barsConfidence,tatumsStart,tatumsConfidence")
+    csvHeaderString = (
+        "SongID,albumName,albumID,artistID,artistLatitude,artistLocation,artistLongitude,artistFamiliarity,"
+        "artistHotttnesss,artistmbid,artistPlaymeid,artist7digitalid,artistTerms,artistTermsCount,artistTermsFreq,"
+        "artistTermsWeight, artistMBTags,artistMBTagsOuterCount,artistMBTagsCount,analysisSampleRate,audioMD5,endOfFadeIn,"
+        "startOfFadeOut,energy,release,release7digitalid,songHotness,track7digitalid,similarartists,similarArtistsCount,"
+        "loudness,mode,modeConfidence,artistName,danceability,duration,keySignature,keySignatureConfidence,tempo,"
+        "timeSignature,timeSignatureConfidence,title,year,trackID,segmentsStart,segmentsCount,segmentsConfidence,"
+        "segmentsPitches,segmentsTimbre,segmentsLoudnessMax,segmentsLoudnessMaxTime,segmentsLoudnessStart,sectionStarts,"
+        "sectionCount,sectionsConfidence,beatsStart,beatsCount,beatsConfidence,barsStart,barsCount,barsConfidence,"
+        "tatumsStart,tatumsCount,tatumsConfidence"
+    )
 
-    csvAttributeList = re.split('\W+', csvHeaderString)
-    for i, v in enumerate(csvAttributeList):
-        csvAttributeList[i] = csvAttributeList[i].lower()
+    # csvAttributeList = re.split('\W+', csvHeaderString)
+    # for i, v in enumerate(csvAttributeList):
+    #     csvAttributeList[i] = v.lower()
+
+    outputFile1 = open(os.path.join(output_dir, base_file_name).format(0), "w")
+
     writeheader(outputFile1, csvHeaderString)
-    csvRowString = ""
     print("started converting")
 
-
-
-    #Set the basedir here, the root directory from which the search
-    #for files stored in a (hierarchical data structure) will originate
-    basedir = "." # "." As the default means the current directory
-    ext = ".h5" #Set the extension here. H5 is the extension for HDF5 files.
+    # Set the basedir here, the root directory from which the search
+    # for files stored in a (hierarchical data structure) will originate
     #################################################
-  
-    #FOR LOOP
-    counter = 0
-    filecounter = 0
+
+    # FOR LOOP
     csvRowString = ""
-    for root, dirs, files in os.walk(basedir):        
-        files = glob.glob(os.path.join(root,'*'+ext))
-        for f in files:
-            counter+=1
-            if (counter % 1000) == 0 :
+    row_limit = 10000
+
+    counter = 0
+    file_counter = 0
+    for root, dirs, files in os.walk(base_dir):
+        fs = glob.glob(os.path.join(root, '*' + ext))
+        for f in fs:
+            counter += 1
+            if (counter % 1000) == 0:
                 print "Progress: {0}".format(counter)
-            if (counter % 10000) == 0 :
+            if (counter % 10000) == 0:
                 outputFile1.close()
-                filecounter+=1
-                outputFile1 = open('out/SongCSV{0}.csv'.format(filecounter), 'w')
+                file_counter += 1
+                outputFile1 = open(os.path.join(output_dir, base_file_name).format(file_counter), 'w')
                 writeheader(outputFile1, csvHeaderString)
-            
+
             songH5File = hdf5_getters.open_h5_file_read(f)
             song = Song(str(hdf5_getters.get_song_id(songH5File)))
 
@@ -167,78 +237,104 @@ def main():
             # print type(testDanceability)
             # print ("Here is the danceability: ") + str(testDanceability)
 
-            song.artistName = str(hdf5_getters.get_artist_name(songH5File))
-            song.artistID = str(hdf5_getters.get_artist_id(songH5File))
-            song.albumID = str(hdf5_getters.get_release_7digitalid(songH5File))
-            song.artistLatitude = str(hdf5_getters.get_artist_latitude(songH5File))
-            song.artistLocation = str(hdf5_getters.get_artist_location(songH5File))
-            song.artistLongitude = str(hdf5_getters.get_artist_longitude(songH5File))
-            song.artistFamiliarity = str(hdf5_getters.get_artist_familiarity(songH5File))
-            song.artistHotttnesss = str(hdf5_getters.get_artist_hotttnesss(songH5File))
-            song.artistmbid = str(hdf5_getters.get_artist_mbid(songH5File))
-            song.artistPlaymeid = str(hdf5_getters.get_artist_playmeid(songH5File))
-            song.artist7digitalid = str(hdf5_getters.get_artist_7digitalid(songH5File))
-            song.artistTerms = str(hdf5_getters.get_artist_terms(songH5File)) 
-            song.artistTermsFreq = str(hdf5_getters.get_artist_terms_freq(songH5File))
-            song.artistTermsWeight = str(hdf5_getters.get_artist_terms_weight(songH5File))
-            song.artistMBTags = str(hdf5_getters.get_artist_mbtags(songH5File))      
-            song.artistMBTagsCount = str(hdf5_getters.get_artist_mbtags_count(songH5File))
-            song.analysisSampleRate = str(hdf5_getters.get_analysis_sample_rate(songH5File))
-            song.audioMD5 = str(hdf5_getters.get_audio_md5(songH5File))
-            song.endOfFadeIn = str(hdf5_getters.get_end_of_fade_in(songH5File))
-            song.startOfFadeOut = str(hdf5_getters.get_start_of_fade_out(songH5File))
-            song.energy = str(hdf5_getters.get_energy(songH5File))
-            song.release = str(hdf5_getters.get_release(songH5File))
-            song.release7digitalid = str(hdf5_getters.get_release_7digitalid(songH5File))
-            song.songHotness = str(hdf5_getters.get_song_hotttnesss(songH5File))
-            song.track7digitalid = str(hdf5_getters.get_track_7digitalid(songH5File))
-            song.similarartists = str(hdf5_getters.get_similar_artists(songH5File))
-            song.loudness = str(hdf5_getters.get_loudness(songH5File))
-            song.mode = str(hdf5_getters.get_mode(songH5File))
-            song.modeConfidence = str(hdf5_getters.get_mode_confidence(songH5File))
-            song.artistName = str(hdf5_getters.get_artist_name(songH5File))
-            song.danceability = str(hdf5_getters.get_danceability(songH5File))
-            song.duration = str(hdf5_getters.get_duration(songH5File))
-            song.keySignature = str(hdf5_getters.get_key(songH5File))
-            song.keySignatureConfidence = str(hdf5_getters.get_key_confidence(songH5File))
-            song.tempo = str(hdf5_getters.get_tempo(songH5File))
-            song.timeSignature = str(hdf5_getters.get_time_signature(songH5File))
-            song.timeSignatureConfidence = str(hdf5_getters.get_time_signature_confidence(songH5File))
-            song.title = str(hdf5_getters.get_title(songH5File))
-            song.year = str(hdf5_getters.get_year(songH5File))
-            song.trackID = str(hdf5_getters.get_track_id(songH5File))
-            song.segmentsStart = str(hdf5_getters.get_segments_start(songH5File))
-            song.segmentsConfidence = str(hdf5_getters.get_segments_confidence(songH5File))
-            song.segmentsPitches = str(hdf5_getters.get_segments_pitches(songH5File))
-            song.segmentsTimbre = str(hdf5_getters.get_segments_timbre(songH5File))
-            song.segmentsLoudnessMax = str(hdf5_getters.get_segments_loudness_max(songH5File))
-            song.segmentsLoudnessMaxTime = str(hdf5_getters.get_segments_loudness_max_time(songH5File))
-            song.segmentsLoudnessStart = str(hdf5_getters.get_segments_loudness_start(songH5File))
-            song.sectionStarts = str(hdf5_getters.get_sections_start(songH5File))
-            song.sectionsConfidence = str(hdf5_getters.get_sections_confidence(songH5File))
-            song.beatsStart = str(hdf5_getters.get_beats_start(songH5File))
-            song.beatsConfidence = str(hdf5_getters.get_beats_confidence(songH5File))
-            song.barsStart = str(hdf5_getters.get_bars_start(songH5File))
-            song.barsConfidence = str(hdf5_getters.get_bars_confidence(songH5File))
-            song.tatumsStart = str(hdf5_getters.get_tatums_start(songH5File))
-            song.tatumsConfidence = str(hdf5_getters.get_tatums_confidence(songH5File))
-            
+            song.artistName = remove_trap_characters(str(hdf5_getters.get_artist_name(songH5File)))
+            song.artistID = remove_trap_characters(str(hdf5_getters.get_artist_id(songH5File)))
+            song.albumID = remove_trap_characters(str(hdf5_getters.get_release_7digitalid(songH5File)))
+            song.artistLatitude = remove_trap_characters(str(hdf5_getters.get_artist_latitude(songH5File)))
+            # Replace the comma in the location (if there is one), since this will displace the entire row
+            song.artistLocation = remove_trap_characters(
+                str(hdf5_getters.get_artist_location(songH5File))
+            ).replace(',', ':')
+            song.artistLongitude = remove_trap_characters(str(hdf5_getters.get_artist_longitude(songH5File)))
+            song.artistFamiliarity = remove_trap_characters(str(hdf5_getters.get_artist_familiarity(songH5File)))
+            song.artistHotttnesss = remove_trap_characters(str(hdf5_getters.get_artist_hotttnesss(songH5File)))
+            song.artistmbid = remove_trap_characters(str(hdf5_getters.get_artist_mbid(songH5File)))
+            song.artistPlaymeid = remove_trap_characters(str(hdf5_getters.get_artist_playmeid(songH5File)))
+            song.artist7digitalid = remove_trap_characters(str(hdf5_getters.get_artist_7digitalid(songH5File)))
 
-            #print song count
+            temp = hdf5_getters.get_artist_terms(songH5File)
+            song.artistTerms = remove_trap_characters(str(temp))
+            song.artistTermsCount = get_list_length(temp)
+            song.artistTermsFreq = remove_trap_characters(str(hdf5_getters.get_artist_terms_freq(songH5File)))
+            song.artistTermsWeight = remove_trap_characters(str(hdf5_getters.get_artist_terms_weight(songH5File)))
+
+            temp = hdf5_getters.get_artist_mbtags(songH5File)
+            song.artistMBTags = remove_trap_characters(str(temp))
+            song.artistMBTagsOuterCount = get_list_length(temp)
+            song.artistMBTagsCount = remove_trap_characters(str(hdf5_getters.get_artist_mbtags_count(songH5File)))
+            song.analysisSampleRate = remove_trap_characters(str(hdf5_getters.get_analysis_sample_rate(songH5File)))
+            song.audioMD5 = remove_trap_characters(str(hdf5_getters.get_audio_md5(songH5File)))
+            song.endOfFadeIn = remove_trap_characters(str(hdf5_getters.get_end_of_fade_in(songH5File)))
+            song.startOfFadeOut = remove_trap_characters(str(hdf5_getters.get_start_of_fade_out(songH5File)))
+            song.energy = remove_trap_characters(str(hdf5_getters.get_energy(songH5File)))
+            song.release = remove_trap_characters(str(hdf5_getters.get_release(songH5File)))
+            song.release7digitalid = remove_trap_characters(str(hdf5_getters.get_release_7digitalid(songH5File)))
+            song.songHotness = remove_trap_characters(str(hdf5_getters.get_song_hotttnesss(songH5File)))
+            song.track7digitalid = remove_trap_characters(str(hdf5_getters.get_track_7digitalid(songH5File)))
+
+            temp = hdf5_getters.get_similar_artists(songH5File)
+            song.similarartists = remove_trap_characters(str(temp))
+            song.similarArtistsCount = get_list_length(temp)
+            song.loudness = remove_trap_characters(str(hdf5_getters.get_loudness(songH5File)))
+            song.mode = remove_trap_characters(str(hdf5_getters.get_mode(songH5File)))
+            song.modeConfidence = remove_trap_characters(str(hdf5_getters.get_mode_confidence(songH5File)))
+            song.artistName = remove_trap_characters(str(hdf5_getters.get_artist_name(songH5File)))
+            song.danceability = remove_trap_characters(str(hdf5_getters.get_danceability(songH5File)))
+            song.duration = remove_trap_characters(str(hdf5_getters.get_duration(songH5File)))
+            song.keySignature = remove_trap_characters(str(hdf5_getters.get_key(songH5File)))
+            song.keySignatureConfidence = remove_trap_characters(str(hdf5_getters.get_key_confidence(songH5File)))
+            song.tempo = remove_trap_characters(str(hdf5_getters.get_tempo(songH5File)))
+            song.timeSignature = remove_trap_characters(str(hdf5_getters.get_time_signature(songH5File)))
+            song.timeSignatureConfidence = remove_trap_characters(str(hdf5_getters.get_time_signature_confidence(songH5File)))
+            song.title = remove_trap_characters(str(hdf5_getters.get_title(songH5File)))
+            song.year = remove_trap_characters(str(hdf5_getters.get_year(songH5File)))
+            song.trackID = remove_trap_characters(str(hdf5_getters.get_track_id(songH5File)))
+
+            temp = hdf5_getters.get_segments_start(songH5File)
+            song.segmentsStart = remove_trap_characters(str(temp))
+            song.segmentsCount = get_list_length(temp)
+            song.segmentsConfidence = remove_trap_characters(str(hdf5_getters.get_segments_confidence(songH5File)))
+            song.segmentsPitches = remove_trap_characters(str(hdf5_getters.get_segments_pitches(songH5File)))
+            song.segmentsTimbre = remove_trap_characters(str(hdf5_getters.get_segments_timbre(songH5File)))
+            song.segmentsLoudnessMax = remove_trap_characters(str(hdf5_getters.get_segments_loudness_max(songH5File)))
+            song.segmentsLoudnessMaxTime = remove_trap_characters(str(hdf5_getters.get_segments_loudness_max_time(songH5File)))
+            song.segmentsLoudnessStart = remove_trap_characters(str(hdf5_getters.get_segments_loudness_start(songH5File)))
+
+            temp = hdf5_getters.get_sections_start(songH5File)
+            song.sectionStarts = remove_trap_characters(str(temp))
+            song.sectionCount = get_list_length(temp)
+            song.sectionsConfidence = remove_trap_characters(str(hdf5_getters.get_sections_confidence(songH5File)))
+
+            temp = hdf5_getters.get_beats_start(songH5File)
+            song.beatsStart = remove_trap_characters(str(temp))
+            song.beatsCount = get_list_length(temp)
+            song.beatsConfidence = remove_trap_characters(str(hdf5_getters.get_beats_confidence(songH5File)))
+
+            temp = hdf5_getters.get_bars_start(songH5File)
+            song.barsStart = remove_trap_characters(str(temp))
+            song.barsCount = get_list_length(temp)
+            song.barsConfidence = remove_trap_characters(str(hdf5_getters.get_bars_confidence(songH5File)))
+
+            temp = hdf5_getters.get_tatums_start(songH5File)
+            song.tatumsStart = remove_trap_characters(str(temp))
+            song.tatumsCount = get_list_length(temp)
+            song.tatumsConfidence = remove_trap_characters(str(hdf5_getters.get_tatums_confidence(songH5File)))
+
+            # print song count
             csvRowString += str(song.songCount) + ","
 
-            for attribute in  re.split('\W+', csvHeaderString):
+            for attribute in re.split('\W+', csvHeaderString):
                 # print "Here is the attribute: " + attribute + " \n"
-                if attribute != "SongID" :
+                if attribute != "SongID":
                     csvRowString += str(getattr(song, attribute))
-                elif attribute != "SongID" :
+                elif attribute != "SongID":
                     print "Attibute {0} not found".format(attribute)
 
                 csvRowString += ","
 
-            #Remove the final comma from each row in the csv
+            # Remove the final comma from each row in the csv
             lastIndex = len(csvRowString)
-            csvRowString = csvRowString[0:lastIndex-1]
+            csvRowString = csvRowString[0:lastIndex - 1]
             csvRowString += "\n"
             outputFile1.write(csvRowString)
             csvRowString = ""
@@ -246,5 +342,3 @@ def main():
             songH5File.close()
 
     outputFile1.close()
-	
-main()
